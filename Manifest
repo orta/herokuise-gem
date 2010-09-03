@@ -1,4 +1,6 @@
 Manifest
+README
 Rakefile
-bin/herokise
+bin/herokuise
 herokise.gemspec
+install.rb
