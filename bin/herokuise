@@ -55,10 +55,8 @@ puts "Pulling down Paul Irish's HTML5 Boilerplate code"
 # and not get any git issues
 `rm -rf #{appname}/public/.git`
 
-
 #switch to the new app directory
 Dir.chdir( appname )
-
 
 puts "Commiting to Github"
 
