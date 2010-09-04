@@ -3,4 +3,3 @@ README
 Rakefile
 bin/herokuise
 herokise.gemspec
-install.rb

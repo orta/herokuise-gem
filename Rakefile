@@ -2,7 +2,7 @@ require 'rubygems'
 require 'rake'
 require 'echoe'
 
-Echoe.new('herokuise', '0.0.1') do |p|
+Echoe.new('herokuise', '0.5') do |p|
   p.description    = "automate getting a site on heroku and git"
   p.url            = "http://github.com/orta/herokuise"
   p.author         = "orta therox"
