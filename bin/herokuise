@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require 'open-uri'
+
 appname = ARGV[0]
  
 # later add domains
@@ -7,7 +9,8 @@ appname = ARGV[0]
 
 if !appname
   puts" Usage: herokuise [appname] - this will create a github repo and set up a sinatra app serving static content on heroku"
-  Process.exit
+  appname = "nellbot"
+  # Process.exit
 end
 
 github_user = `git config --global  github.user`
@@ -16,6 +19,13 @@ if github_user == ""
   puts "  ->  github config"
   Process.exit
 end
+
+if open("http://#{appname}.heroku.com/").include? "No such app"
+  puts "Heroku app http://#{appname}.heroku.com already exists"
+  Process.exit
+end
+
+Process.exit
 
 #kill the old folder if it exists
 if File.exists? appname
@@ -77,4 +87,6 @@ puts "Creating heroku repo"
 puts "Pushing to Heroku"
 
 `git push heroku master`
+
+
 `heroku open`
