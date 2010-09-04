@@ -1,3 +1,10 @@
+Herokuise 
+========
+
+build a website with github and heroku quick
+--------
+
+
 People be wantin my warez
 askin for sites
 they be freakin
@@ -12,5 +19,6 @@ gangsta knows its fast
 
 
 e.g.
-(soon) sudo gem install herokuise
+--------
+sudo gem install herokuise
 herokuise downydowns
