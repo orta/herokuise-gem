@@ -15,10 +15,11 @@ fast
 sing with sinatra
 create a github song
 in the chord heroku
-gangsta knows its fast
+g' knows its fast
 </pre>
 
 e.g.
 --------
 sudo gem install herokuise
+
 herokuise downydowns

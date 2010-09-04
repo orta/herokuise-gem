@@ -6,7 +6,8 @@ appname = ARGV[0]
 #domain_name = ARGV[1]
 
 if !appname
-  appname = "ortatest"
+  puts" Usage: herokuise [appname] - this will create a github repo and set up a sinatra app serving static content on heroku"
+  Process.exit
 end
 
 github_user = `git config --global  github.user`
