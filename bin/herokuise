@@ -1,92 +1,124 @@
 #!/usr/bin/env ruby
-
 require 'open-uri'
+require 'optparse'
 
-appname = ARGV[0]
- 
-# later add domains
-#domain_name = ARGV[1]
+options = {}
 
-if !appname
-  puts" Usage: herokuise [appname] - this will create a github repo and set up a sinatra app serving static content on heroku"
-  appname = "nellbot"
-  # Process.exit
+optparse = OptionParser.new do|opts|
+  # Set a banner, displayed at the top
+  # of the help screen.
+  opts.banner = "Usage: herokuise [options] this will create a github repo and set up a sinatra app serving static content on heroku"
+
+  # Define the options, and what they do
+  options[:nogithub] = false
+  opts.on( '-ng', '--no-github', 'Don\'t create a github repository' ) do
+    options[:nogithub] = true
+  end
+  
+  options[:nogithub] = false
+  opts.on( '-rm', '--delete', '--destroy',  'Don\'t create a github repository' ) do
+  `heroku destroy #{ ARGV[0] }`
+  end
+  
+  
+  opts.on( '-h', '--help', 'Display this screen' ) do
+    puts opts
+    exit
+  end
+  
+  
 end
 
-github_user = `git config --global  github.user`
-if github_user == ""
-  puts "You need to set up your github gem username/password, type in"
-  puts "  ->  github config"
-  Process.exit
-end
-
-if open("http://#{appname}.heroku.com/").include? "No such app"
-  puts "Heroku app http://#{appname}.heroku.com already exists"
-  Process.exit
-end
-
-Process.exit
-
-#kill the old folder if it exists
-if File.exists? appname
-  `rm -r #{appname}`
-end
-
-puts "Creating #{appname}"
-
-puts "Creating Github repo"
-
-#this makes the appname folder for us
-`github create #{appname}`
-#`mkdir #{appname}`
-
-puts "Making folders"
-
-Dir.mkdir appname + "/public"
-
-puts "Making Files"
-
-`echo "sinatra" > #{appname}/.gems`
-
-`echo "require 'app' 
-  run Sinatra::Application" >  #{appname}/config.ru`
-
-`echo "require 'rubygems' 
-require 'sinatra' 
-
-get '/' do 
-  redirect '/index.html' 
-end" > #{appname}/app.rb`
-
-puts "Pulling down Paul Irish's HTML5 Boilerplate code"
-
-# let's work with a good start.
-`git clone http://github.com/paulirish/html5-boilerplate.git #{appname}/public`
-
-# and not get any git issues
-`rm -rf #{appname}/public/.git`
-
-#switch to the new app directory
-Dir.chdir( appname )
-
-puts "Commiting to Github"
-
-`git add .`
-`git add .gems`
-
-`git commit -m "initial import from orta-herokuize"`
-
-puts "Pushing to Github"
-
-`git push`
-
-puts "Creating heroku repo"
-
-`heroku create #{appname}`
-
-puts "Pushing to Heroku"
-
-`git push heroku master`
-
-
-`heroku open`
+optparse.parse!
+# 
+# appname = ARGV[0]
+#  if !appname
+#   puts opts
+#   appname = "nellbot"
+#   Process.exit
+# end
+# 
+# 
+#   github_user = `git config --global  github.user`
+#   if github_user == ""
+#     puts "You need to set up your github gem username/password, type in"
+#     puts "  ->  github config"
+#     Process.exit
+#   end
+# 
+# begin
+#   if open("http://#{appname}.heroku.com/", "User-Agent" => "Ruby/#{RUBY_VERSION}").include? "No such app"
+#     puts "Heroku app http://#{appname}.heroku.com already exists"
+#     Process.exit
+#   end
+# rescue
+# 
+# end
+# 
+# #kill the old folder if it exists
+# if File.exists? appname
+#   `rm -r #{appname}`
+# end
+# 
+# puts "Creating #{appname}"
+# 
+# puts "Creating Github repo"
+# 
+# if options[:nogithub] == false
+#   #this makes the appname folder for us
+#   `github create #{appname}`
+#   #`mkdir #{appname}`  
+# else
+#   `mkdir #{appname}`  
+# end
+# 
+# puts "Making folders"
+# 
+# Dir.mkdir appname + "/public"
+# 
+# puts "Making Files"
+# 
+# `echo "sinatra" > #{appname}/.gems`
+# 
+# `echo "require 'app' 
+#   run Sinatra::Application" >  #{appname}/config.ru`
+# 
+# `echo "require 'rubygems' 
+# require 'sinatra' 
+# 
+# get '/' do 
+#   redirect '/index.html' 
+# end" > #{appname}/app.rb`
+# 
+# puts "Pulling down Paul Irish's HTML5 Boilerplate code"
+# 
+# # let's work with a good start.
+# `git clone http://github.com/paulirish/html5-boilerplate.git #{appname}/public`
+# 
+# # and not get any git issues
+# `rm -rf #{appname}/public/.git`
+# 
+# #switch to the new app directory
+# Dir.chdir( appname )
+# 
+# puts "Commiting to Github"
+# 
+# `git add .`
+# `git add .gems`
+# 
+# `git commit -m "initial import from orta-herokuize"`
+# 
+# if options[:nogithub] == false
+#   puts "Pushing to Github"
+#   `git push`
+# end
+# 
+# puts "Creating heroku repo"
+# 
+# `heroku create #{appname}`
+# 
+# puts "Pushing to Heroku"
+# 
+# `git push heroku master`
+# 
+# `heroku open`
