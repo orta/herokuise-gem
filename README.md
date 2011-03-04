@@ -4,22 +4,10 @@ Herokuise
 build a website with github and heroku quick
 --------
 
-<pre>
-People be wantin my warez
-askin for sites
-they be freakin
-i be givin
-
-herokuise lets me make shit
-fast
-sing with sinatra
-create a github song
-in the chord heroku
-g' knows its fast
-</pre>
+This gem will get you set up quickly with a sinatra app that runs your website, and throw it onto Heroku, it'll bring down the HTML5 boilerplate as something you can start working with straight away.
 
 e.g.
 --------
-sudo gem install herokuise
+gem install herokuise
 
 herokuise downydowns
