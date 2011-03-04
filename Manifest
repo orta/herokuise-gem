@@ -1,5 +1,4 @@
 Manifest
-README
+README.md
 Rakefile
 bin/herokuise
-herokise.gemspec
